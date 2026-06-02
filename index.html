@@ -1,35 +1,655 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firu Firu</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            padding: 40px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        h1 { color: #2c3e50; }
-        p { color: #7f8c8d; font-size: 1.1em; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Firu Firu | Köpek Eğitimi ve Yürüyüş Takibi</title>
+
+  <meta
+    name="description"
+    content="Firu Firu, köpek sahipleri için eğitim, yürüyüş ve günlük bakım rutinlerini daha düzenli ve keyifli hale getiren mobil uygulamadır."
+  />
+  <meta
+    name="keywords"
+    content="Firu Firu, köpek eğitimi, köpek yürüyüş uygulaması, köpek bakım uygulaması, pet uygulaması"
+  />
+  <meta name="author" content="Firu Firu" />
+
+  <meta property="og:title" content="Firu Firu" />
+  <meta
+    property="og:description"
+    content="Köpeğinizle daha düzenli, daha keyifli ve daha bilinçli bir günlük rutin oluşturun."
+  />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --bg: #f7efe6;
+      --surface: #fffaf4;
+      --surface-strong: #ffffff;
+      --text: #2b211c;
+      --muted: #75675f;
+      --primary: #d87325;
+      --primary-dark: #9f4f19;
+      --accent: #3a2921;
+      --border: rgba(58, 41, 33, 0.12);
+      --shadow: 0 28px 80px rgba(58, 41, 33, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(216, 115, 37, 0.18), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(58, 41, 33, 0.10), transparent 30%),
+        var(--bg);
+      padding: 28px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--accent);
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), #f1aa64);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 32px rgba(216, 115, 37, 0.28);
+    }
+
+    .brand-mark svg {
+      width: 29px;
+      height: 29px;
+      fill: white;
+    }
+
+    .brand-name {
+      font-size: 1.28rem;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-note {
+      font-size: 0.92rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: rgba(255, 250, 244, 0.72);
+      padding: 10px 16px;
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+    }
+
+    .language-switch {
+      display: flex;
+      gap: 6px;
+      padding: 5px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 250, 244, 0.72);
+      backdrop-filter: blur(12px);
+    }
+
+    .lang-button {
+      border: 0;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.84rem;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .lang-button.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 660px;
+      border: 1px solid var(--border);
+      border-radius: 38px;
+      background: linear-gradient(145deg, rgba(255, 250, 244, 0.95), rgba(255, 255, 255, 0.78));
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+
+    .hero-content {
+      padding: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary-dark);
+      background: rgba(216, 115, 37, 0.09);
+      border: 1px solid rgba(216, 115, 37, 0.18);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 750;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 780px;
+      color: var(--accent);
+      font-size: clamp(3rem, 6.2vw, 6.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+    }
+
+    .subtitle {
+      margin: 30px 0 0;
+      max-width: 640px;
+      color: var(--muted);
+      font-size: 1.18rem;
+      line-height: 1.75;
+    }
+
+    .subtitle strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 38px;
+    }
+
+    .button {
+      min-height: 56px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      padding: 0 24px;
+      border-radius: 17px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 18px 36px rgba(58, 41, 33, 0.24);
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 42px rgba(58, 41, 33, 0.28);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+
+    .button-secondary:hover {
+      transform: translateY(-2px);
+      background: white;
+    }
+
+    .store-icon {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 48px;
+      max-width: 760px;
+    }
+
+    .feature {
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid var(--border);
+    }
+
+    .feature-number {
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .feature h3 {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 100%;
+      background:
+        linear-gradient(135deg, rgba(216, 115, 37, 0.08), rgba(58, 41, 33, 0.05)),
+        transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px;
+    }
+
+    .abstract-card {
+      position: relative;
+      width: min(420px, 100%);
+      aspect-ratio: 1 / 1;
+      border-radius: 42px;
+      background:
+        radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.95), transparent 28%),
+        linear-gradient(145deg, #f2a660, #d87325 54%, #5a3828);
+      box-shadow: 0 36px 90px rgba(58, 41, 33, 0.24);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .abstract-card::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      top: -74px;
+      right: -60px;
+    }
+
+    .abstract-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(43, 33, 28, 0.14);
+      bottom: -70px;
+      left: -46px;
+    }
+
+    .paw-large {
+      position: relative;
+      z-index: 2;
+      width: 178px;
+      height: 178px;
+      fill: rgba(255, 255, 255, 0.95);
+      filter: drop-shadow(0 18px 30px rgba(58, 41, 33, 0.22));
+      transform: rotate(-6deg);
+    }
+
+    .floating-label {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: 44px;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.46);
+      color: var(--accent);
+      padding: 13px 18px;
+      border-radius: 999px;
+      font-weight: 850;
+      box-shadow: 0 16px 36px rgba(58, 41, 33, 0.16);
+      backdrop-filter: blur(12px);
+      white-space: nowrap;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+      color: rgba(58, 41, 33, 0.68);
+      font-size: 0.92rem;
+      padding: 0 6px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 750;
+    }
+
+    @media (max-width: 940px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content {
+        padding: 52px 34px;
+      }
+
+      .hero-visual {
+        padding: 36px 34px 56px;
+      }
+
+      .feature-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 18px;
+      }
+
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .header-right {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .nav-note {
+        width: 100%;
+      }
+
+      .hero {
+        border-radius: 28px;
+      }
+
+      .hero-content {
+        padding: 40px 24px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .abstract-card {
+        border-radius: 32px;
+      }
+
+      .paw-large {
+        width: 140px;
+        height: 140px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Firu Firu</h1>
-        <p>Resmi web sitemiz yapım aşamasındadır, çok yakında burada olacağız!</p>
-    </div>
+  <main class="page">
+    <header>
+      <a class="brand" href="/" aria-label="Firu Firu ana sayfa">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 200 200">
+            <ellipse cx="100" cy="122" rx="46" ry="38" />
+            <ellipse cx="55" cy="78" rx="20" ry="28" transform="rotate(-22 55 78)" />
+            <ellipse cx="82" cy="55" rx="20" ry="30" transform="rotate(-8 82 55)" />
+            <ellipse cx="118" cy="55" rx="20" ry="30" transform="rotate(8 118 55)" />
+            <ellipse cx="145" cy="78" rx="20" ry="28" transform="rotate(22 145 78)" />
+          </svg>
+        </div>
+        <div class="brand-name">Firu Firu</div>
+      </a>
+
+      <div class="header-right">
+        <div class="language-switch" aria-label="Dil seçimi">
+          <button class="lang-button active" type="button" data-lang-button="tr">TR</button>
+          <button class="lang-button" type="button" data-lang-button="en">EN</button>
+        </div>
+
+        <div class="nav-note" data-i18n="navNote">Resmi web sitemiz hazırlanıyor</div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow" data-i18n="eyebrow">
+          Köpek eğitimi · Yürüyüş takibi · Günlük rutinler
+        </div>
+
+        <h1 data-i18n="headline">Köpeğinizle daha düzenli bir hayat.</h1>
+
+        <p class="subtitle" data-i18n="subtitle">
+          <strong>Firu Firu</strong>, köpek sahiplerinin yürüyüş, eğitim ve günlük bakım alışkanlıklarını
+          daha düzenli takip etmesine yardımcı olmak için geliştirilen mobil uygulamadır.
+          Resmi web sitemiz çok yakında yayında olacak.
+        </p>
+
+        <div class="actions">
+          <a
+            class="button button-primary"
+            href="https://play.google.com/store/search?q=firu+firu&c=apps&hl=tr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg class="store-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3.6 2.2c-.4.2-.6.6-.6 1.2v17.2c0 .6.2 1 .6 1.2l9.7-9.8L3.6 2.2zm11 11.1-2.1-2.1L5.1 3.7l10.2 5.8 2.9 1.7-3.6 2.1zm.7 1.2L5.1 20.3l7.4-7.5 2.1 2.1.7-.4zm4.6-2.1c.8-.5.8-1.3 0-1.8l-2.2-1.3-3.9 2.3 3.9 2.3 2.2-1.5z"/>
+            </svg>
+            <span data-i18n="playButton">Google Play’de Görüntüle</span>
+          </a>
+
+          <a class="button button-secondary" href="#bilgi">
+            <span data-i18n="infoButton">Daha Fazla Bilgi</span>
+          </a>
+        </div>
+
+        <div id="bilgi" class="feature-row">
+          <div class="feature">
+            <div class="feature-number">01</div>
+            <h3 data-i18n="featureOneTitle">Yürüyüş alışkanlığı</h3>
+            <p data-i18n="featureOneText">
+              Köpeğinizin günlük aktivite rutinini daha düzenli takip etmenize yardımcı olur.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-number">02</div>
+            <h3 data-i18n="featureTwoTitle">Eğitim takibi</h3>
+            <p data-i18n="featureTwoText">
+              Temel eğitim süreçlerini küçük, sürdürülebilir adımlarla destekler.
+            </p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-number">03</div>
+            <h3 data-i18n="featureThreeTitle">Basit kullanım</h3>
+            <p data-i18n="featureThreeText">
+              Karmaşık ekranlar yerine sade, anlaşılır ve günlük kullanıma uygun bir deneyim sunar.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="abstract-card">
+          <svg class="paw-large" viewBox="0 0 200 200">
+            <ellipse cx="100" cy="125" rx="48" ry="39" />
+            <ellipse cx="54" cy="80" rx="21" ry="30" transform="rotate(-23 54 80)" />
+            <ellipse cx="82" cy="55" rx="21" ry="32" transform="rotate(-8 82 55)" />
+            <ellipse cx="118" cy="55" rx="21" ry="32" transform="rotate(8 118 55)" />
+            <ellipse cx="146" cy="80" rx="21" ry="30" transform="rotate(23 146 80)" />
+          </svg>
+
+          <div class="floating-label" data-i18n="floatingLabel">Firu Firu yakında burada</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div data-i18n="footerCopyright">© 2026 Firu Firu. Tüm hakları saklıdır.</div>
+      <div>
+        <a
+          href="https://play.google.com/store/search?q=firu+firu&c=apps&hl=tr"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-i18n="footerPlay"
+        >
+          Google Play sayfasına git
+        </a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const translations = {
+      tr: {
+        title: "Firu Firu | Köpek Eğitimi ve Yürüyüş Takibi",
+        description:
+          "Firu Firu, köpek sahipleri için eğitim, yürüyüş ve günlük bakım rutinlerini daha düzenli ve keyifli hale getiren mobil uygulamadır.",
+        navNote: "Resmi web sitemiz hazırlanıyor",
+        eyebrow: "Köpek eğitimi · Yürüyüş takibi · Günlük rutinler",
+        headline: "Köpeğinizle daha düzenli bir hayat.",
+        subtitle:
+          "<strong>Firu Firu</strong>, köpek sahiplerinin yürüyüş, eğitim ve günlük bakım alışkanlıklarını daha düzenli takip etmesine yardımcı olmak için geliştirilen mobil uygulamadır. Resmi web sitemiz çok yakında yayında olacak.",
+        playButton: "Google Play’de Görüntüle",
+        infoButton: "Daha Fazla Bilgi",
+        featureOneTitle: "Yürüyüş alışkanlığı",
+        featureOneText:
+          "Köpeğinizin günlük aktivite rutinini daha düzenli takip etmenize yardımcı olur.",
+        featureTwoTitle: "Eğitim takibi",
+        featureTwoText:
+          "Temel eğitim süreçlerini küçük, sürdürülebilir adımlarla destekler.",
+        featureThreeTitle: "Basit kullanım",
+        featureThreeText:
+          "Karmaşık ekranlar yerine sade, anlaşılır ve günlük kullanıma uygun bir deneyim sunar.",
+        floatingLabel: "Firu Firu yakında burada",
+        footerCopyright: "© 2026 Firu Firu. Tüm hakları saklıdır.",
+        footerPlay: "Google Play sayfasına git"
+      },
+      en: {
+        title: "Firu Firu | Dog Training and Walk Tracking",
+        description:
+          "Firu Firu is a mobile app designed to help dog owners build more consistent training, walking and daily care routines.",
+        navNote: "Official website is coming soon",
+        eyebrow: "Dog training · Walk tracking · Daily routines",
+        headline: "A more consistent life with your dog.",
+        subtitle:
+          "<strong>Firu Firu</strong> is a mobile app designed to help dog owners track walking, training and daily care habits in a simpler and more consistent way. Our official website will be available soon.",
+        playButton: "View on Google Play",
+        infoButton: "Learn More",
+        featureOneTitle: "Walk routines",
+        featureOneText:
+          "Helps you keep better track of your dog’s daily activity and walking habits.",
+        featureTwoTitle: "Training progress",
+        featureTwoText:
+          "Supports basic training routines through small, sustainable daily steps.",
+        featureThreeTitle: "Simple experience",
+        featureThreeText:
+          "Designed to be clear, lightweight and practical for everyday use.",
+        floatingLabel: "Firu Firu is coming soon",
+        footerCopyright: "© 2026 Firu Firu. All rights reserved.",
+        footerPlay: "Go to Google Play"
+      }
+    };
+
+    const metaDescription = document.querySelector('meta[name="description"]');
+    const buttons = document.querySelectorAll("[data-lang-button]");
+    const translatableElements = document.querySelectorAll("[data-i18n]");
+
+    function setLanguage(lang) {
+      const dictionary = translations[lang];
+
+      document.documentElement.lang = lang;
+      document.title = dictionary.title;
+
+      if (metaDescription) {
+        metaDescription.setAttribute("content", dictionary.description);
+      }
+
+      translatableElements.forEach((element) => {
+        const key = element.getAttribute("data-i18n");
+        if (dictionary[key]) {
+          element.innerHTML = dictionary[key];
+        }
+      });
+
+      buttons.forEach((button) => {
+        const isActive = button.getAttribute("data-lang-button") === lang;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setLanguage(button.getAttribute("data-lang-button"));
+      });
+    });
+
+    setLanguage("tr");
+  </script>
 </body>
 </html>
